@@ -1,48 +1,35 @@
-const PRODUCTS_FETCH_REQUESTED = 'products/fetchRequested';
-const PRODUCTS_FETCH_SUCCEEDED = 'products/fetchSucceeded';
-const PRODUCTS_FETCH_FAILED = 'products/fetchFailed';
+import {
+  PRODUCT_LIST_REQUEST,
+  PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL
+} from '../../constants/productContant'
 
-const initialState = {
-  list: [],
-  loading: false,
-  error: null,
-};
-
-const productsSlice = (state = initialState, action) => {
-  switch (action.type) {
-    case PRODUCTS_FETCH_REQUESTED:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    case PRODUCTS_FETCH_SUCCEEDED:
-      return {
-        ...state,
-        list: action.payload,
-        loading: false,
-      };
-    case PRODUCTS_FETCH_FAILED:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    // add other product-related cases here
-    default:
-      return state;
+export const productSlice = (state = {products: []}, action) =>{
+  switch(action.type){
+    case PRODUCT_LIST_REQUEST:
+      return {loading: true, products: []}
+      case PRODUCT_LIST_SUCCESS:
+        return {loading: false, products: action.payload}
+        case PRODUCT_LIST_FAIL: 
+        return {loading: false, error: action.payload}
+        default: 
+        return state
   }
-};
+}
 
-const fetchProducts = () => async (dispatch) => {
-  try {
-    dispatch({ type: PRODUCTS_FETCH_REQUESTED });
-    const response = await fetch('https://example.com/api/products');
-    const products = await response.json();
-    dispatch({ type: PRODUCTS_FETCH_SUCCEEDED, payload: products });
-  } catch (error) {
-    dispatch({ type: PRODUCTS_FETCH_FAILED, payload: error.message });
+
+export const productDetailsSlice = (state = {products: []}, action) =>{
+  switch(action.type){
+    case PRODUCT_DETAILS_REQUEST:
+      return {loading: true, products: []}
+      case PRODUCT_DETAILS_SUCCESS:
+        return {loading: false, products: action.payload}
+        case PRODUCT_DETAILS_FAIL: 
+        return {loading: false, error: action.payload}
+        default: 
+        return state
   }
-};
-
-export { productsSlice, fetchProducts };
+}
