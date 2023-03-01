@@ -4,7 +4,11 @@ const asyncHandler = require('express-async-handler')
 
 const mongoDB = asyncHandler(async (req, res) => {
     try {
-        await mongoose.connect(process.env.DB_URL)
+        mongoose.set('strictQuery', true)
+        await mongoose.connect(process.env.DB_URL,{
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        })
         console.log("Database connected".cyan.bold)
 
     } catch (err) {

@@ -6,11 +6,13 @@ import Product from '../tools/Product'
 const Home = () => {
 
   const [product, setproduct] = React.useState([])
+  const [data, setdata] = React.useState(false)
 
 const loanproduct = async () =>{
   try{
     const {data} = await axios.get('https://fakestoreapi.com/products')
     setproduct(data)
+    setdata(true)
   }catch(err){
     console.log('error')
   }
@@ -22,6 +24,7 @@ const loanproduct = async () =>{
   return (
     <>
       {
+        data && 
         <main>
         <Container>
         <div className='my-4'>
