@@ -4,7 +4,7 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
-  PRODUCT_DETAILS_FAIL
+  PRODUCT_DETAILS_FAIL,
 } from '../../constants/productContant'
 
 export const productSlice = (state = {products: []}, action) =>{
@@ -21,7 +21,7 @@ export const productSlice = (state = {products: []}, action) =>{
 }
 
 
-export const productDetailsSlice = (state = {products: []}, action) =>{
+export const productDetailSlice = (state = {products: []}, action) =>{
   switch(action.type){
     case PRODUCT_DETAILS_REQUEST:
       return {loading: true, products: []}
@@ -33,3 +33,8 @@ export const productDetailsSlice = (state = {products: []}, action) =>{
         return state
   }
 }
+
+
+
+
+

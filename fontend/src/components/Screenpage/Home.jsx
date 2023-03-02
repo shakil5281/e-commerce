@@ -15,13 +15,10 @@ const Home = () => {
 
 
 
+
   React.useEffect(()=>{
     dispatch(listProducts())
   }, [dispatch])
-
-
-
-
 
   return (
     <>
