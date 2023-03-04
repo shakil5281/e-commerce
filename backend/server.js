@@ -10,13 +10,17 @@ require('dotenv').config()
 
 const PORT = process.env.PORT || 8080
 
+//
+app.use(express.json());
+
+
 
 readdirSync("./routes").map(r => app.use("/api/v1", require(`./routes/${r}`))) 
 
 // error handler
 app.use((req, res, next) =>{
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-        res.status(statusCode).json({message: 'Server error'})
+        res.status(statusCode).json({message: 'Server error', status: 'Router in Not defined'})
     next()
 })
 
