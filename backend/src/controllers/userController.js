@@ -6,12 +6,11 @@ const bcrypt = require('bcryptjs')
 
 exports.signupUser = asyncHandler(async(req, res) =>{
     try{
-        const {name, email, pass} = req.body 
+        const {name, email, password} = req.body 
         const userExits = await User.findOne({email})
         if(userExits){
             res.status(404).json({message: 'User already exists'})
         }else{
-            const password = await bcrypt.hash(pass, 12)
             const user =new User({name, email, password})
             await user.save()
             res.status(201).json(user)
@@ -39,10 +38,21 @@ exports.signinUser = asyncHandler(async(req, res) =>{
                 email: user.email,
                 isAdmin: user.isAdmin,
                 token: GenerateToken(user._id)
-
-
             })
         }
+
+    }catch(err){
+        console.error(err)
+        res.status(500).json({error: err.message || 'Internal server Error'}) 
+    }
+})
+
+
+exports.getProfile = asyncHandler(async(req, res) =>{
+    try{
+        
+        const user = await User.findById(req.user._id)
+        res.status(200).json(user)
 
     }catch(err){
         console.error(err)
